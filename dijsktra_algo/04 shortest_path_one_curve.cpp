@@ -36,8 +36,8 @@ vector<int> dijsktra_Algo(int src, int N, vector<vector<vector<int>>> &adjList)
 
         for(auto n : adjList[u])
         {
-            int v = n[1];
-            int wt = n[0];
+            int v = n[0];
+            int wt = n[1];
             if(dist[v] > dist[u] + wt)
             {
                 dist[v] = dist[u] + wt;
@@ -82,4 +82,14 @@ int main()
     // number of edges (M)
     // starting point (a)
     // ending point (b)
+    vector<vector<int>> edges = {
+        {0, 1, 1, 4},
+        {0, 2, 2, 4},
+        {0, 3, 3, 1},
+        {1, 3, 6, 5}
+    };
+    int N = 4;
+    int M = 4;
+    int a = 1, b = 3;
+    cout<<"Shortest path including atmost one curved edge : "<< findShortestPath(a, b, N, M, edges);
 }
