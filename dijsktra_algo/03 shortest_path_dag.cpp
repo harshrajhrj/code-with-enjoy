@@ -1,6 +1,8 @@
 /**
  * @file 02 topological_sort.cpp
  * Shortest Path in Directed Acyclic Graph
+ * https://www.geeksforgeeks.org/dsa/shortest-path-for-directed-acyclic-graphs/
+ * https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph/1
  * Following is complete algorithm for finding shortest distances. 
 
     1. Initialize dist[] = {INF, INF, ....} and dist[s] = 0 where s is the source vertex. 
