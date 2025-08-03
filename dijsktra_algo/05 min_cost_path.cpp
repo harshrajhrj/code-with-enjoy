@@ -60,3 +60,10 @@ int main()
 
     return 0;
 }
+
+/**
+ * Why dynamic programming cannot be used?
+ * Dynamic programming fails here because allowing movement in all four directions creates cycles where cells 
+ * can be revisited, breaking the optimal substructure assumption. This means the cost to reach a cell from a 
+ * given cell isn't fixed but depends on the entire path.
+ */
