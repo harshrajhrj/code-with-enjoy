@@ -35,7 +35,7 @@ int longestValidParentheses(string str)
 
 int main()
 {
-    string str = ")()";
+    string str = ")()()(((((((((())))))))))";
     cout << longestValidParentheses(str);
     return 0;
 }
