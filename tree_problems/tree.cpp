@@ -68,10 +68,26 @@ void printChildren(int node, vii &adj)
     }
 }
 
+void printDegrees(int node, vii &adj)
+{
+    int i = 1;
+    FORI(i, adj.size())
+    {
+        cout << i << ": ";
+
+        // Root has no parent, thus, its degree is equal to
+        // the edges it is connected to
+        if (i == node)
+            cout << adj[i].size() << endl;
+        else
+            cout << adj[i].size() - 1 << endl;
+    }
+}
+
 int main()
 {
     int N = 7, root = 1;
-    vii adj(N + 1, vector<int>());
+    vii adj(N + 1, vi());
 
     addEdge(1, 2, adj);
     addEdge(1, 3, adj);
@@ -86,6 +102,8 @@ int main()
     printLeafNodes(root, adj);
     cout << "Print children:" << endl;
     printChildren(root, adj);
+    cout << "Print degress:" << endl;
+    printDegrees(root, adj);
 
     return 0;
 }
