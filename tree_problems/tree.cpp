@@ -102,7 +102,7 @@ int main()
     printLeafNodes(root, adj);
     cout << "Print children:" << endl;
     printChildren(root, adj);
-    cout << "Print degress:" << endl;
+    cout << "Print degrees:" << endl;
     printDegrees(root, adj);
 
     return 0;

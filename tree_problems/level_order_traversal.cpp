@@ -1,3 +1,9 @@
+// https://www.geeksforgeeks.org/dsa/print-level-order-traversal-line-line/
+// https://www.geeksforgeeks.org/dsa/connect-nodes-at-same-level/
+// https://www.geeksforgeeks.org/dsa/zigzag-tree-traversal/
+// https://www.geeksforgeeks.org/dsa/find-level-maximum-sum-binary-tree/
+// https://www.geeksforgeeks.org/dsa/maximum-width-of-a-binary-tree/
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -25,7 +31,7 @@ public:
     }
 };
 
-void util(Node *node, int level, vii &res)
+void lot_util(Node *node, int level, vii &res)
 {
     // Base cases
     if (node == nullptr)
@@ -37,14 +43,14 @@ void util(Node *node, int level, vii &res)
 
     res[level].push_back(node->data);
 
-    util(node->left, level + 1, res);
-    util(node->right, level + 1, res);
+    lot_util(node->left, level + 1, res);
+    lot_util(node->right, level + 1, res);
 }
 
 vii levelOrderTraversal(Node *node)
 {
     vii res;
-    util(node, 0, res);
+    lot_util(node, 0, res);
     return res;
 }
 
@@ -77,6 +83,11 @@ vii levelOrderTraversalQueue(Node *node)
         level++;
     }
     return res;
+}
+
+void lot_line_line(Node *node)
+{
+
 }
 
 int main()

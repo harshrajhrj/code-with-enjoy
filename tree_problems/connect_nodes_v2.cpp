@@ -1,3 +1,4 @@
+// For any tree, using recusrion O(N) -> Time and O(h) -> Space
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -26,36 +27,56 @@ public:
     }
 };
 
-vector<string> solve(Node *root)
+Node *findNextRight(Node *node)
 {
-    queue<Node *> q;
-    q.push(root);
-    q.push(nullptr);
+    Node *temp = node->nextRight;
 
-    // Connect the nextRight pointers
-
-    while (!q.empty())
+    while (temp)
     {
-        Node *node = q.front();
-        q.pop();
+        // Case 1
+        //           1
+        //         /   \
+        //        2     3
+        //      /  \   /  \
+        //     3    3 3    3
+        if (temp->left)
+            return temp->left;
+        if (temp->right)
+            return temp->right;
 
-        if (!node)
+        temp = temp->nextRight;
+    }
+    return nullptr;
+}
+
+void connectNodes(Node *root)
+{
+    if (root == nullptr)
+        return;
+
+    if (root->left)
+    {
+        if (root->right)
         {
-            node->nextRight = q.front();
-            if (node->left)
-                q.push(node->left);
-
-            if (node->right)
-                q.push(node->right);
+            root->left->nextRight = root->right;
         }
-        else if (!q.empty())
+        else
         {
-            q.push(nullptr);
+            root->left->nextRight = findNextRight(root);
         }
     }
+    if (root->right)
+    {
+        root->right->nextRight = findNextRight(root);
+    }
+}
 
+vector<string> solve(Node *root)
+{
     // Now store the results
     vector<string> res;
+
+    queue<Node *> q;
     q.push(root);
     q.push(nullptr);
 
@@ -87,35 +108,22 @@ vector<string> solve(Node *root)
 
 int main()
 {
-    //        5
-    //       / \
-    //      12   13
-    //     / \    \
-    //    7   14    2
-    //   / \  / \  / \
-    //  17 23 27 3 8  11
+    // Constructed binary tree is
+    //       10
+    //      / \
+    //     8   2
+    //    /
+    //   3
 
-    Node *root = new Node(5);
-    root->left = new Node(12);
-    root->right = new Node(13);
+    Node *root = new Node(10);
+    root->left = new Node(8);
+    root->right = new Node(2);
+    root->left->left = new Node(3);
 
-    root->left->left = new Node(7);
-    root->left->right = new Node(14);
-
-    root->right->right = new Node(2);
-
-    root->left->left->left = new Node(17);
-    root->left->left->right = new Node(23);
-
-    root->left->right->left = new Node(27);
-    root->left->right->right = new Node(3);
-
-    root->right->right->left = new Node(8);
-    root->right->right->right = new Node(11);
+    connectNodes(root);
 
     vector<string> res = solve(root);
-
-    for (string s : res)
+    for (const string &s : res)
     {
         cout << s << ' ';
     }
