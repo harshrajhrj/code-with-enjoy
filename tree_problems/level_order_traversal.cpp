@@ -85,9 +85,28 @@ vii levelOrderTraversalQueue(Node *node)
     return res;
 }
 
-void lot_line_line(Node *node)
+void lot_line_line(Node *root)
 {
+    queue<Node *> q;
+    q.push(root);
 
+    while (!q.empty())
+    {
+        int len = q.size();
+        for (int i = 0; i < len; i++)
+        {
+            Node *node = q.front();
+            q.pop();
+
+            cout << node->data << " ";
+
+            if (node->left)
+                q.push(node->left);
+            if (node->right)
+                q.push(node->right);
+        }
+        cout << endl;
+    }
 }
 
 int main()
@@ -146,4 +165,10 @@ int main()
         }
         cout << "] ";
     }
+
+    cout << endl
+         << endl;
+
+    lot_line_line(root);
+    return 0;
 }
