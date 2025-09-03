@@ -85,6 +85,8 @@ vii levelOrderTraversalQueue(Node *node)
     return res;
 }
 
+
+// Using with queue without using delimiter
 void lot_line_line(Node *root)
 {
     queue<Node *> q;
