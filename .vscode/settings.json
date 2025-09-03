@@ -19,6 +19,7 @@
         "stacktrace": "cpp",
         "text_encoding": "cpp",
         "regex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "bitset": "cpp"
     }
 }

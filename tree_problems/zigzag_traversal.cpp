@@ -93,11 +93,49 @@ void solve_using_recursion(Node *root)
 }
 
 // Using two stacks
-void solve_using_two_stacks(Node *root) {
-    
+// This traversal alternates as we first push right in s2 and first push left in s1.
+void solve_using_two_stacks(Node *root)
+{
+    stack<Node *> s1;
+    stack<Node *> s2;
+
+    s1.push(root);
+    vi res;
+
+    while (!s1.empty() || !s2.empty())
+    {
+        while (!s1.empty())
+        {
+            Node *node = s1.top();
+            s1.pop();
+            res.push_back(node->data);
+            if (node->left)
+                s2.push(node->left);
+            if (node->right)
+                s2.push(node->right);
+        }
+        while (!s2.empty())
+        {
+            Node *node = s2.top();
+            s2.pop();
+            res.push_back(node->data);
+            if (node->right)
+                s1.push(node->right);
+            if (node->left)
+                s1.push(node->left);
+        }
+    }
+
+    int i = 0;
+    FOR(i, res.size())
+    {
+        cout << res[i] << " ";
+    }
 }
 // Using deque
-void solve_using_deque(Node *root) {}
+void solve_using_deque(Node *root) {
+    
+}
 
 int main()
 {
@@ -127,5 +165,5 @@ int main()
     root->right->right->left = new Node(8);
     root->right->right->right = new Node(11);
 
-    solve_using_recursion(root);
+    solve_using_two_stacks(root);
 }
