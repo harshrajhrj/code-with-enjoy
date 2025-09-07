@@ -133,8 +133,41 @@ void solve_using_two_stacks(Node *root)
     }
 }
 // Using deque
-void solve_using_deque(Node *root) {
-    
+void solve_using_deque(Node *root)
+{
+    deque<Node *> dq;
+    bool reverse = false;
+
+    dq.push_front(root);
+
+    while (!dq.empty())
+    {
+        int n = dq.size();
+        while (n--)
+        {
+            if (reverse)
+            {
+                Node *node = dq.back();
+                dq.pop_back();
+                cout << node->data << " ";
+                if (node->right)
+                    dq.push_front(node->right);
+                if (node->left)
+                    dq.push_front(node->left);
+            }
+            else
+            {
+                Node *node = dq.front();
+                dq.pop_front();
+                cout << node->data << " ";
+                if (node->left)
+                    dq.push_back(node->left);
+                if (node->right)
+                    dq.push_back(node->right);
+            }
+        }
+        reverse = !reverse;
+    }
 }
 
 int main()
@@ -165,5 +198,7 @@ int main()
     root->right->right->left = new Node(8);
     root->right->right->right = new Node(11);
 
-    solve_using_two_stacks(root);
+    solve_using_deque(root);
+
+    return 0;
 }
