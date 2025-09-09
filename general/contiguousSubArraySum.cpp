@@ -23,4 +23,6 @@ int main()
         }
     }
     cout << global;
+
+    return 0;
 }
