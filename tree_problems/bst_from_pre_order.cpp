@@ -131,7 +131,9 @@ Node *insertBST_3(vi &pre, int &idx, int min, int max)
 int main()
 {
     vector<int> pre = {10, 5, 1, 7, 40, 50};
-    Node *root = constructBST_3(pre);
+    // Node *root = constructBST_1(pre); // NAIVE TC - O(N^2)
+    // Node *root = constructBST_2(pre); // BETTER - O(N^2)
+    Node *root = constructBST_3(pre); // EFFICIENT - O(N)
     printArrInOrder(root);
     return 0;
 }

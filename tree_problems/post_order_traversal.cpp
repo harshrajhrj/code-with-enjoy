@@ -6,6 +6,8 @@
 // https://www.geeksforgeeks.org/dsa/morris-traversal-for-postorder/
 // https://www.geeksforgeeks.org/dsa/print-postorder-from-given-inorder-and-preorder-traversals/
 
+// Other questions: https://www.geeksforgeeks.org/tag/morris-traversal/
+
 #include <bits/stdc++.h>
 
 using std::cin;
@@ -13,6 +15,7 @@ using std::cout;
 using std::max;
 using std::pair;
 using std::queue;
+using std::reverse;
 using std::stack;
 using std::vector;
 
@@ -140,9 +143,67 @@ void solve_using_stack_v2(Node *root)
     }
 }
 
-void solve_using_bst_preorder(Node *root)
+void solve_using_bst_preorder_util(vi &arr, int &idx, int min, int max)
 {
-    
+    if (idx >= arr.size())
+        return;
+
+    int val = arr[idx];
+
+    if (val < min || val > max)
+        return;
+
+    idx++;
+
+    solve_using_bst_preorder_util(arr, idx, min, val);
+    solve_using_bst_preorder_util(arr, idx, val, max);
+
+    cout << val << " ";
+}
+void solve_using_bst_preorder(vi &arr)
+{
+    int idx = 0;
+    solve_using_bst_preorder_util(arr, idx, INT_MIN, INT_MAX);
+}
+
+void solve_using_morris_traversal(Node *root)
+{
+    vi res;
+    Node *curr = root;
+
+    while (curr != nullptr)
+    {
+        if (curr->right == nullptr)
+        {
+            res.push_back(curr->data);
+            curr = curr->left;
+        }
+        else
+        {
+            Node *prev = curr->right;
+            while (prev->left != nullptr && prev->left != curr)
+                prev = prev->left;
+
+            if (prev->left == nullptr)
+            {
+                res.push_back(curr->data);
+                prev->left = curr;
+                curr = curr->right;
+            }
+            else
+            {
+                prev->left = nullptr;
+                curr = curr->left;
+            }
+        }
+    }
+
+    reverse(res.begin(), res.end());
+
+    for (auto &x : res)
+    {
+        cout << x << " ";
+    }
 }
 
 int main()
@@ -173,5 +234,13 @@ int main()
     root->right->right->left = new Node(8);
     root->right->right->right = new Node(11);
 
-    solve_using_stack_v2(root);
+    // solve_using_stack_v2(root);
+
+    // vi pre = {40, 30, 35, 80, 100};
+
+    // solve_using_bst_preorder(pre);
+
+    solve_using_morris_traversal(root);
+
+    return 0;
 }
