@@ -20,6 +20,8 @@
         "text_encoding": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "memory_resource": "cpp",
+        "scoped_allocator": "cpp"
     }
 }

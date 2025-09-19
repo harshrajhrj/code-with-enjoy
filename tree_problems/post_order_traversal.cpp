@@ -140,6 +140,11 @@ void solve_using_stack_v2(Node *root)
     }
 }
 
+void solve_using_bst_preorder(Node *root)
+{
+    
+}
+
 int main()
 {
     //        5
