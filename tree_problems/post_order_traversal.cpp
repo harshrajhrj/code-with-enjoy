@@ -44,6 +44,7 @@ public:
     }
 };
 
+//==================================================================//
 void solve(Node *root)
 {
     if (root == nullptr)
@@ -54,6 +55,7 @@ void solve(Node *root)
     cout << root->data << " ";
 }
 
+//==================================================================//
 void solve_using_two_stacks(Node *root)
 {
     stack<Node *> s1;
@@ -82,6 +84,9 @@ void solve_using_two_stacks(Node *root)
     }
 }
 
+//==================================================================//
+// Push the root twice
+// O(N) <- TC and O(N) <- SC
 void solve_using_stack_v1(Node *root)
 {
     stack<Node *> st;
@@ -113,6 +118,8 @@ void solve_using_stack_v1(Node *root)
     }
 }
 
+//==================================================================//
+// https://www.geeksforgeeks.org/dsa/iterative-postorder-traversal-set-3/
 void solve_using_stack_v2(Node *root)
 {
     stack<pair<Node *, int>> st;
@@ -144,6 +151,7 @@ void solve_using_stack_v2(Node *root)
     }
 }
 
+//==================================================================//
 void solve_using_bst_preorder_util(vi &arr, int &idx, int min, int max)
 {
     if (idx >= arr.size())
@@ -161,6 +169,8 @@ void solve_using_bst_preorder_util(vi &arr, int &idx, int min, int max)
 
     cout << val << " ";
 }
+
+//==================================================================//
 void solve_using_bst_preorder(vi &arr)
 {
     int idx = 0;
@@ -206,6 +216,7 @@ void solve_using_morris_traversal(Node *root)
         cout << x << " ";
     }
 }
+
 //==================================================================//
 // Print postorder traversal from given inorder and preorder traversal
 // Naive approach : O(N^2) <- TC
@@ -269,6 +280,9 @@ void solve_using_inorder_preorder(vi &in, vi &pre)
     }
     solve_using_inorder_preorder_util_2(in, pre, mp, 0, in.size() - 1, preStart);
 }
+
+//==================================================================//
+// Without recursion and without stack
 
 int main()
 {

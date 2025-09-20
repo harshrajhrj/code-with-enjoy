@@ -22,6 +22,7 @@
         "valarray": "cpp",
         "bitset": "cpp",
         "memory_resource": "cpp",
-        "scoped_allocator": "cpp"
+        "scoped_allocator": "cpp",
+        "new": "cpp"
     }
 }
