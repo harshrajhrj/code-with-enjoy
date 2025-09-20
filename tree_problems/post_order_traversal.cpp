@@ -17,6 +17,7 @@ using std::pair;
 using std::queue;
 using std::reverse;
 using std::stack;
+using std::unordered_map;
 using std::vector;
 
 #define FOR(x, to) for (x = 0; x < (to); x++)
@@ -205,6 +206,69 @@ void solve_using_morris_traversal(Node *root)
         cout << x << " ";
     }
 }
+//==================================================================//
+// Print postorder traversal from given inorder and preorder traversal
+// Naive approach : O(N^2) <- TC
+
+int search(vi &in, int root)
+{
+    int i;
+    FOR(i, in.size())
+    {
+        if (in[i] == root)
+            return i;
+    }
+    return -1;
+}
+
+void solve_using_inorder_preorder_util_1(vi &in, vi &pre, int inStart, int inEnd, int preStart)
+{
+    if (inStart > inEnd)
+        return;
+
+    int root_idx = search(in, pre[preStart]);
+
+    if (root_idx > inStart) // this means we have some nodes in left subtree
+        solve_using_inorder_preorder_util_1(in, pre, inStart, root_idx - 1, preStart + 1);
+
+    if (root_idx < inEnd)
+        solve_using_inorder_preorder_util_1(in, pre, root_idx + 1, inEnd, preStart + root_idx - inStart + 1);
+
+    cout << pre[preStart] << " ";
+}
+
+// Efficient approach - O(N) <- TC
+
+void solve_using_inorder_preorder_util_2(vi &in, vi &pre, unordered_map<int, int> &mp, int inStart, int inEnd, int &preStart)
+{
+    if (inStart > inEnd)
+        return;
+
+    int rootIdx = mp[pre[preStart++]];
+    // if (rootIdx > inStart)
+    solve_using_inorder_preorder_util_2(in, pre, mp, inStart, rootIdx - 1, preStart);
+    // if (rootIdx < inEnd)
+    solve_using_inorder_preorder_util_2(in, pre, mp, rootIdx + 1, inEnd, preStart);
+
+    cout << in[rootIdx] << " ";
+}
+
+void solve_using_inorder_preorder(vi &in, vi &pre)
+{
+    // naive
+    // solve_using_inorder_preorder_util_1(in, pre, 0, in.size() - 1, 0);
+
+    // efficient
+    unordered_map<int, int> mp;
+    int preStart = 0;
+
+    int i;
+    FOR(i, in.size())
+    {
+        mp[in[i]] = i;
+    }
+    solve_using_inorder_preorder_util_2(in, pre, mp, 0, in.size() - 1, preStart);
+}
 
 int main()
 {
@@ -240,7 +304,11 @@ int main()
 
     // solve_using_bst_preorder(pre);
 
-    solve_using_morris_traversal(root);
+    // solve_using_morris_traversal(root);
+
+    vi in = {4, 2, 5, 1, 3, 6};
+    vi pre = {1, 2, 4, 5, 3, 6};
+    solve_using_inorder_preorder(in, pre);
 
     return 0;
 }
