@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-    string s = "abscabsd";
+    string s = "abbc";
     int charfreq[128] = {0};
     int longest = 0;
     int strSize = s.size();
