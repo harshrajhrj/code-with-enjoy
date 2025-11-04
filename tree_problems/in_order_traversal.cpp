@@ -165,6 +165,6 @@ int main()
     vi inorder = {3, 1, 4, 0, 5, 2};
     vi preorder = {0, 1, 3, 4, 2, 5};
     Node *root = constructBT(inorder, preorder);
-    print_tree_inorder(root);
+    print_tree_inorder(root); // verify
     return 0;
 }
