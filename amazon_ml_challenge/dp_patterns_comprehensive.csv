@@ -1,0 +1,38 @@
+Pattern,Problem,Difficulty,Approach,Data Structures,Time Complexity,Space Complexity,Key Insight
+Fibonacci/Simple Recurrence,Climbing Stairs,Easy,dp[i] = dp[i-1] + dp[i-2]; ways to reach step i,Array/Variables,O(n),O(1) optimized / O(n) array,Each state depends on previous 1-2 states
+Fibonacci/Simple Recurrence,Min Cost Climbing Stairs,Easy,"dp[i] = cost[i] + min(dp[i-1], dp[i-2])",Array,O(n),O(1) optimized,Minimum cost to reach each step
+Fibonacci/Simple Recurrence,Dice Combinations,Medium,Sum of ways from previous 6 positions,Array,O(n),O(n),Can reach from any of 6 previous states
+Fibonacci/Simple Recurrence,Range Sum Query - Immutable,Easy,Prefix sum array: prefix[i] = prefix[i-1] + nums[i],Array (Prefix Sum),"O(1) query, O(n) preprocessing",O(n),Store cumulative sums for O(1) range queries
+0/1 Knapsack,Target Sum,Medium,Convert to subset sum: find subset with sum=(total-target)/2,2D Array dp[n][sum],O(n * sum),O(n * sum) or O(sum) optimized,Transform +/- assignment to subset partitioning
+0/1 Knapsack,Partition Equal Subset Sum,Medium,Find subset with sum = total/2; dp[i][j] = can make sum j with first i items,2D Boolean Array or 1D Set,O(n * sum),O(sum),Equal partition means each subset = total/2
+0/1 Knapsack,0/1 Knapsack,Medium,"dp[i][w] = max(dp[i-1][w], value[i] + dp[i-1][w-weight[i]])",2D Array,O(n * W),O(W) space optimized,Include or exclude each item; maximize value
+0/1 Knapsack,Combination Sum IV,Medium,dp[i] = sum(dp[i-num]) for all num in nums where num <= i,Array,O(target * n),O(target),Order matters - try all nums at each step
+Unbounded Knapsack,Coin Change,Medium,dp[i] = min coins to make amount i; try each coin repeatedly,Array,O(amount * coins),O(amount),Can use same coin multiple times
+Unbounded Knapsack,Coin Combinations I,Medium,Count ways to form sum; order doesn't matter,Array,O(n * sum),O(sum),Iterate coins first to avoid counting permutations
+Unbounded Knapsack,Cutting Rod,Medium,dp[i] = max revenue from rod of length i; try all cuts,Array,O(n²),O(n),Maximize value by choosing optimal cuts
+Longest Common Subsequence,Uncrossed Lines,Medium,Same as LCS; dp[i][j] = match if s1[i]==s2[j] else max,2D Array,O(m * n),O(m * n) or O(n) optimized,Find longest matching subsequence
+Longest Common Subsequence,Edit Distance,Hard,dp[i][j] = min operations to convert s1[0..i] to s2[0..j],2D Array,O(m * n),O(m * n),"Three operations: insert, delete, replace"
+Longest Common Subsequence,Longest Common Subsequence,Medium,"If match: dp[i][j] = 1 + dp[i-1][j-1]; else: max(dp[i-1][j], dp[i][j-1])",2D Array,O(m * n),O(m * n),Build up from smaller substrings
+Longest Common Subsequence,Word Break,Medium,dp[i] = can break s[0..i]; check all dictionary words ending at i,Array + HashSet,O(n² * m) where m = avg word length,O(n),Check if substring matches any dictionary word
+Longest Increasing Subsequence,Longest Increasing Subsequence,Medium,DP: O(n²) or Binary Search + Patience Sort: O(n log n),Array (DP) or Array + Binary Search,O(n²) DP / O(n log n) optimized,O(n),Track smallest tail for each length
+Longest Increasing Subsequence,Number of Longest Increasing Subsequence,Medium,Track both length and count; update count when extending,"Two Arrays (length, count)",O(n²),O(n),Maintain count array alongside length array
+Longest Increasing Subsequence,Vacation,Medium,State DP: dp[day][last_activity] = max happiness,2D Array,O(n * k) where k = activities,O(k) optimized,Can't repeat same activity consecutively
+Grid-Based DP,Unique Paths,Medium,dp[i][j] = dp[i-1][j] + dp[i][j-1]; count paths from top-left,2D Array,O(m * n),O(n) optimized,Only move right or down; sum both directions
+Grid-Based DP,Grid Paths,Medium,Similar to Unique Paths but handle obstacles/constraints,2D Array,O(m * n),O(m * n),Skip blocked cells; mark as 0 paths
+Grid-Based DP,Minimum Path Sum (Grid 1),Medium,"dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])",2D Array,O(m * n),O(n) optimized,Take minimum cost path at each cell
+Interval DP,Burst Balloons,Hard,dp[i][j] = max coins from interval; try each balloon as last to burst,2D Array,O(n³),O(n²),Think backwards - which balloon bursts last?
+Interval DP,Palindrome Partitioning II,Hard,dp[i] = min cuts for s[0..i]; check all palindrome substrings,Array + 2D isPalindrome table,O(n²),O(n²),Precompute palindrome checks; minimize cuts
+Interval DP,Longest Palindromic Substring,Medium,Expand around center or dp[i][j] = is s[i..j] palindrome,2D Array or Two Pointers,O(n²),O(n²) DP / O(1) expand,Check all centers and expand outward
+Tree DP,House Robber III,Medium,"Return {rob_root, skip_root}; compute for each subtree",Tree + Memoization Map,O(n),O(h) recursion depth,Can't rob adjacent nodes; track both states
+Tree DP,Tree Matching,Hard,Max matching in tree; dp on subtrees with/without edge to parent,Tree + DP arrays,O(n),O(n),Independent set on tree structure
+Tree DP,House Robber,Medium,"Linear array: dp[i] = max(rob[i] + dp[i-2], dp[i-1])",Array,O(n),O(1) optimized,Can't rob adjacent houses; track 2 states
+Tree DP,House Robber II,Medium,Circular array: solve twice (exclude first or last house),Array,O(n),O(1),Break circle by solving two linear problems
+Bitmasking/State Compression,Campus Bikes II,Medium,dp[mask] = min distance for assigned workers (bitmask),Array indexed by bitmask,O(2^n * n),O(2^n),Each bit represents worker assignment status
+Bitmasking/State Compression,Partition to K Equal Sum Subsets,Medium,dp[mask] = can partition nums with used elements = mask,Array/Map indexed by bitmask,O(2^n * n),O(2^n),Bitmask tracks which elements are used
+Bitmasking/State Compression,Traveling Salesman Problem,Hard,"dp[mask][i] = min cost visiting cities in mask, ending at i",2D Array [2^n][n],O(2^n * n²),O(2^n * n),Bitmask = visited cities; track current city
+Digit DP,Numbers With Repeated Digits,Hard,Count valid numbers digit-by-digit with state tracking,Memoization Map + Bitmask,O(digits * 2^10 * 2),O(digits * 2^10),Track used digits with bitmask; handle tight bound
+Digit DP,Removing Digits,Medium,dp[i] = min steps to reduce i to 0 by subtracting its digits,Array,O(n * log n),O(n),Extract all digits and try subtracting each
+Digit DP,Sushi,Hard,Probabilistic DP with state compression for sushi counts,Map/Array with state tuple,O(n^4),O(n^3),Track count of each sushi type as state
+Probability/Expectation DP,Dice Roll Simulation,Hard,dp[roll][last_digit][consecutive_count] = number of ways,3D Array or Memoization,O(n * 6 * maxRoll),O(n * 6 * maxRoll),Track last digit and consecutive count
+Probability/Expectation DP,Candy Lottery,Medium,Calculate expected value of max of k dice rolls,Array for probabilities,O(n * k),O(n),Expected max = sum of probabilities
+Probability/Expectation DP,Coins (Probability),Hard,dp[i][j] = probability of getting j heads in i flips,2D Array,O(n²),O(n²) or O(n) optimized,Combine probabilities from previous states

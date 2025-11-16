@@ -1,0 +1,12 @@
+Pattern,Problems,Typical Time,Typical Space,Common Data Structure
+Fibonacci/Simple Recurrence,4,O(n),O(n),Array
+0/1 Knapsack,4,O(n * sum),O(W) space optimized,2D Array
+Unbounded Knapsack,3,O(amount * coins),O(amount),Array
+Longest Common Subsequence,4,O(m * n),O(m * n),2D Array
+Longest Increasing Subsequence,3,O(n * k) where k = activities,O(n),2D Array
+Grid-Based DP,3,O(m * n),O(n) optimized,2D Array
+Interval DP,3,O(n²),O(n²),2D Array
+Tree DP,4,O(n),O(1),Array
+Bitmasking/State Compression,3,O(2^n * n),O(2^n),2D Array [2^n][n]
+Digit DP,3,O(digits * 2^10 * 2),O(digits * 2^10),Array
+Probability/Expectation DP,3,O(n * 6 * maxRoll),O(n * 6 * maxRoll),2D Array
