@@ -1,0 +1,487 @@
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║        AMAZON SDE INTERVIEW QUESTIONS - COMPLEXITY REFERENCE SHEET          ║
+║                    11 Problems | 3 Difficulty Levels                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+─────────────────────────────────────────────────────────────────────────────
+QUICK LOOKUP TABLE
+─────────────────────────────────────────────────────────────────────────────
+
+#  | Problem Name              | Difficulty | Time     | Space    | Pattern
+───┼───────────────────────────┼─────────────┼──────────┼──────────┼─────────────────
+1  | Two Sum                   | Easy        | O(n)     | O(n)     | Hash Map
+2  | Contains Duplicate        | Easy        | O(n)     | O(n)     | Hash Set
+3  | Valid Palindrome          | Easy        | O(n)     | O(1)     | Two Pointer
+4  | Climbing Stairs           | Easy        | O(n)     | O(1)     | DP
+5  | Two Sum II (Sorted)       | Medium      | O(n)     | O(1)     | Two Pointer
+6  | 3Sum                      | Medium      | O(n²)    | O(1)     | Sort+2Ptr
+7  | Reverse String            | Medium      | O(n)     | O(1)     | Two Pointer
+8  | Maximum Subarray          | Medium      | O(n)     | O(1)     | Kadane's
+9  | Search Rotated Array      | Medium      | O(log n) | O(1)     | Binary Search
+10 | Merge K Sorted Lists      | Hard        | O(n log k)| O(k)     | Heap
+11 | Word Break II             | Hard        | O(n^n)   | O(n²)    | DFS+Memo
+
+─────────────────────────────────────────────────────────────────────────────
+DETAILED ANALYSIS BY PROBLEM
+─────────────────────────────────────────────────────────────────────────────
+
+┌─ PROBLEM 1: TWO SUM ────────────────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Single pass through array: O(n)                                         │
+│   - HashMap operations (insert/lookup): O(1) average                        │
+│   - Total: O(n) × O(1) = O(n)                                              │
+│                                                                              │
+│ Space Complexity: O(n)                                                       │
+│   - HashMap stores up to n elements in worst case                           │
+│   - No recursive call stack                                                 │
+│   - Dominated by HashMap: O(n)                                             │
+│                                                                              │
+│ Algorithm Trace:                                                             │
+│   Input: [2,7,11,15], target=9                                             │
+│   i=0: complement=7, not in map → add {2:0}                               │
+│   i=1: complement=2, found in map → return [0,1] ✓                        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 2: CONTAINS DUPLICATE ────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Single pass through array                                               │
+│   - Set operations (insert/count): O(1) average                             │
+│   - Early return possible but worst case O(n)                              │
+│                                                                              │
+│ Space Complexity: O(n)                                                       │
+│   - Set stores up to n unique elements                                      │
+│   - Worst case (no duplicates): O(n)                                       │
+│                                                                              │
+│ Optimization:                                                                │
+│   - Can return early on first duplicate → O(n) worst, better average       │
+│   - Array length tracking: if length > unique values → guaranteed duplicate │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 3: VALID PALINDROME ──────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Two pointers traverse from both ends: O(n)                             │
+│   - Character comparison and toLower: O(1)                                  │
+│   - Total: O(n)                                                             │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - Only two pointers used                                                  │
+│   - No extra data structures                                                │
+│   - String parameter doesn't count                                          │
+│                                                                              │
+│ Key Operations:                                                              │
+│   isalnum(c): Check if alphanumeric → O(1)                                 │
+│   tolower(c): Convert to lowercase → O(1)                                  │
+│   Pointer movement: constant time                                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 4: CLIMBING STAIRS ───────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Single loop from 3 to n                                                 │
+│   - Each iteration: constant work (addition)                                │
+│   - Total: O(n)                                                             │
+│                                                                              │
+│ Space Complexity: O(1) - OPTIMIZED                                          │
+│   - Only two variables (prev1, prev2)                                       │
+│   - No array used (could be O(n) if array used)                            │
+│   - Recursive call stack: O(n) if recursive approach                        │
+│                                                                              │
+│ DP Recurrence:                                                               │
+│   dp[i] = dp[i-1] + dp[i-2]                                                │
+│   Base: dp[1]=1, dp[2]=2                                                    │
+│   Example (n=4): dp=[1,2,3,5] → answer is 5                               │
+│                                                                              │
+│ Space Optimization Trick:                                                    │
+│   Normal: dp = [1,2,3,5,...] → O(n) space                                  │
+│   Optimized: Keep only last 2 values → O(1) space                          │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 5: TWO SUM II (SORTED ARRAY) ─────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Two pointers start from ends                                            │
+│   - Each pointer moves at most n positions total                            │
+│   - No nested loops: O(n)                                                   │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - Only two pointers used                                                  │
+│   - No data structures                                                      │
+│   - Better than Problem 1 (hash map needed)                                 │
+│                                                                              │
+│ Two Pointer Logic:                                                           │
+│   [2,7,11,15], target=9                                                     │
+│   L=0, R=3: sum=2+15=17 > 9 → R--                                          │
+│   L=0, R=2: sum=2+11=13 > 9 → R--                                          │
+│   L=0, R=1: sum=2+7=9 ✓ → return [1,2]                                     │
+│                                                                              │
+│ Why this works:                                                              │
+│   - Array sorted → monotonic property                                       │
+│   - If sum < target: need larger → move L right                            │
+│   - If sum > target: need smaller → move R left                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 6: 3SUM ──────────────────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n²)                                                       │
+│   - Sorting: O(n log n)                                                     │
+│   - Outer loop: O(n)                                                        │
+│   - Inner two-pointer loop: O(n)                                            │
+│   - Total: O(n log n) + O(n²) = O(n²) [quadratic dominates]               │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - Sorting: O(log n) recursion depth (quicksort/heapsort)                 │
+│   - Two pointers: O(1)                                                      │
+│   - Output array doesn't count                                              │
+│   - Often considered O(1) ignoring sort space                               │
+│                                                                              │
+│ Algorithm Breakdown:                                                         │
+│   Input: [-1,0,1,2,-1,-4]                                                   │
+│   Sorted: [-4,-1,-1,0,1,2]                                                  │
+│   i=0 (num=-4):                                                              │
+│     target=4, check all pairs: no pairs sum to 4                            │
+│   i=1 (num=-1):                                                              │
+│     target=1, find pairs summing to 1:                                      │
+│     [-1, 0, 1] ✓                                                             │
+│     [-1, 1, 2] → no, sums to 2                                              │
+│   i=2 (skip, duplicate)                                                      │
+│   Result: [[-1,-1,2], [-1,0,1]]                                             │
+│                                                                              │
+│ Optimization: Early termination                                              │
+│   if (nums[i] > 0) break; → no triplets can sum to 0                       │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 7: REVERSE STRING ────────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Two pointers traverse half the array                                    │
+│   - n/2 swaps × O(1) each = O(n)                                           │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - In-place swap                                                           │
+│   - No extra data structures                                                │
+│   - String parameter doesn't count against space                            │
+│                                                                              │
+│ Simple Implementation:                                                       │
+│   Input: ["h","e","l","l","o"]                                              │
+│   Step 1: swap[0,4] → ["o","e","l","l","h"]                                │
+│   Step 2: swap[1,3] → ["o","l","l","e","h"]                                │
+│   Step 3: left=right, stop                                                  │
+│   Output: ["o","l","l","e","h"] ✓                                          │
+│                                                                              │
+│ Why O(1) space:                                                              │
+│   - Swap is built-in operation                                              │
+│   - No recursion (iterative)                                                │
+│   - No data structures allocated                                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 8: MAXIMUM SUBARRAY (KADANE'S ALGORITHM) ──────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n)                                                        │
+│   - Single pass through array                                               │
+│   - Constant work per element (one comparison, one addition)                │
+│   - Total: O(n)                                                             │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - Only two variables (maxCurrent, maxGlobal)                              │
+│   - No arrays or recursion                                                  │
+│   - Pure iterative approach                                                 │
+│                                                                              │
+│ Kadane's Algorithm:                                                          │
+│   for each element:                                                          │
+│     maxCurrent = max(element, maxCurrent + element)                         │
+│     maxGlobal = max(maxGlobal, maxCurrent)                                  │
+│                                                                              │
+│ Trace Example: [-2, 1, -3, 4, -1, 2, 1, -5, 4]                             │
+│   i=0: mc=-2, mg=-2                                                         │
+│   i=1: mc=max(1,1-2)=1, mg=1                                               │
+│   i=2: mc=max(-3,1-3)=-2, mg=1                                             │
+│   i=3: mc=max(4,-2+4)=4, mg=4                                              │
+│   i=4: mc=max(-1,4-1)=3, mg=4                                              │
+│   i=5: mc=max(2,3+2)=5, mg=5                                               │
+│   i=6: mc=max(1,5+1)=6, mg=6 ← Maximum subarray [4,-1,2,1]               │
+│   i=7: mc=max(-5,6-5)=1, mg=6                                              │
+│   i=8: mc=max(4,1+4)=5, mg=6                                               │
+│   Answer: 6 ✓                                                               │
+│                                                                              │
+│ Key Insight:                                                                 │
+│   Only track last element's subarray, not indices                           │
+│   Greedy: if cumulative becomes negative, drop it                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 9: SEARCH IN ROTATED SORTED ARRAY ────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(log n)                                                    │
+│   - Binary search structure: log n iterations                               │
+│   - Each iteration: O(1) comparisons                                        │
+│   - Search space halved each iteration                                      │
+│   - Total: O(log n)                                                         │
+│                                                                              │
+│ Space Complexity: O(1)                                                       │
+│   - Only left and right pointers                                            │
+│   - No recursion (iterative approach)                                       │
+│   - Could be O(log n) if recursive                                          │
+│                                                                              │
+│ Algorithm:                                                                   │
+│   1. Find middle                                                             │
+│   2. Determine which half is sorted                                         │
+│   3. Check if target in sorted half                                         │
+│   4. Search accordingly                                                      │
+│                                                                              │
+│ Example: [4,5,6,7,0,1,2], target=0                                         │
+│   L=0, R=6, mid=3, nums[3]=7                                                │
+│   Left[0..3]=[4,5,6,7] is sorted                                            │
+│   0 not in [4,7] → search right                                             │
+│   L=4, R=6, mid=5, nums[5]=1                                                │
+│   Right[4..6]=[0,1,2] is sorted                                             │
+│   0 in [0,2] → search right                                                 │
+│   L=4, R=4, nums[4]=0 ✓ → return 4                                         │
+│                                                                              │
+│ Why O(log n):                                                                │
+│   - Binary search principle: eliminate half each iteration                  │
+│   - Even in rotated array, one half always sorted                           │
+│   - Leverages this property to reduce search space                          │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 10: MERGE K SORTED LISTS ─────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n log k)                                                  │
+│   - n = total number of nodes across all k lists                            │
+│   - Each node processed once                                                │
+│   - Heap operations (insert/extract min): O(log k)                          │
+│   - Total: n × O(log k) = O(n log k)                                       │
+│                                                                              │
+│ Space Complexity: O(k)                                                       │
+│   - Heap stores at most k nodes (one from each list)                        │
+│   - Output list: O(n) but doesn't count                                     │
+│   - Dominant: O(k)                                                          │
+│                                                                              │
+│ Heap Approach:                                                               │
+│   1. Add first node from each k list to min heap: O(k log k)                │
+│   2. While heap not empty:                                                  │
+│      - Extract min: O(log k)                                                │
+│      - Add to result                                                        │
+│      - If node has next, add next to heap: O(log k)                         │
+│   3. Repeat for all n nodes                                                │
+│   Total: n × O(log k) = O(n log k)                                         │
+│                                                                              │
+│ Alternative: Divide & Conquer                                               │
+│   Time: O(n log k) [same]                                                   │
+│   Space: O(log k) [recursion depth] + O(n) [result]                        │
+│   Better cache locality but same asymptotic complexity                      │
+│                                                                              │
+│ Why Better Than Brute Force:                                                │
+│   Brute: Compare all, O(n log n) [merge k sorted arrays naively]           │
+│   Heap: Min heap efficiently tracks minimum: O(n log k)                    │
+│   When k << n: Significant improvement                                      │
+│   Example: k=100 lists, n=10000 nodes                                       │
+│     Brute: 10000 × log(10000) ≈ 132,000 ops                                │
+│     Heap: 10000 × log(100) ≈ 66,500 ops                                    │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PROBLEM 11: WORD BREAK II ────────────────────────────────────────────────┐
+│                                                                              │
+│ Time Complexity: O(n^n) WORST CASE                                           │
+│   - But typically O(3^n) with memoization in practice                       │
+│   - Worst case: string = "aaaaaa", dict = ["a","aa","aaa",...,full string] │
+│   - Each position: multiple ways to break                                   │
+│   - Total combinations can be exponential                                   │
+│                                                                              │
+│ Space Complexity: O(n²)                                                      │
+│   - Memoization: n substrings × results per substring                      │
+│   - Recursion depth: O(n)                                                   │
+│   - Dominated by memoization storage                                        │
+│                                                                              │
+│ Algorithm with Memoization:                                                 │
+│   memo[""] = [""]                                                            │
+│   for each remaining string s:                                              │
+│     for each word in dictionary:                                            │
+│       if s starts with word:                                                │
+│         results = memoized_break(s minus word)                             │
+│         combine word with results                                           │
+│     memo[s] = combined results                                              │
+│                                                                              │
+│ Example: s="pineapplepenapple", dict=["apple","pen","applepen",           │
+│                                          "pine","pineapple"]                │
+│   break("pineapplepenapple"):                                               │
+│     ├─ try "pine": break("applepenapple")                                  │
+│     │   └─ try "apple": break("penapple")                                  │
+│     │       └─ try "pen": break("apple")                                   │
+│     │           └─ try "apple": break("") → [[]]                           │
+│     │               return ["apple"]                                        │
+│     │           return ["pen apple"]                                        │
+│     │       return ["apple pen apple"]                                      │
+│     │   return ["apple apple pen apple"]                                    │
+│     │ return ["pine apple pen apple"]                                       │
+│     └─ try "pineapple": break("penapple")                                  │
+│         └─ try "pen": break("apple")                                        │
+│             └─ try "apple": break("") → [[]]                               │
+│                 return ["apple"]                                            │
+│             return ["pen apple"]                                            │
+│         return ["pineapple pen apple"]                                      │
+│                                                                              │
+│ Memoization Savings:                                                         │
+│   break("apple") computed once, result reused                              │
+│   Without memo: exponential recomputation                                   │
+│   With memo: computed once per unique substring                             │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+─────────────────────────────────────────────────────────────────────────────
+COMPLEXITY COMPARISON CHART
+─────────────────────────────────────────────────────────────────────────────
+
+   O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2^n) < O(n!)
+
+Easy Problems:
+  O(n): Two Sum, Contains Duplicate, Valid Palindrome, Reverse String
+  O(n) optimized to O(1) space: Climbing Stairs
+
+Medium Problems:
+  O(n): Two Sum II, Reverse String
+  O(n log n): not in this set (but 3Sum sorting is)
+  O(n²): 3Sum (n log n for sort + n² for nested loops)
+  O(log n): Search Rotated Array
+
+Hard Problems:
+  O(n log k): Merge K Lists (k can be large)
+  O(n^n): Word Break II worst case
+
+─────────────────────────────────────────────────────────────────────────────
+PATTERN QUICK REFERENCE
+─────────────────────────────────────────────────────────────────────────────
+
+Hash Map/Set Problems (Use When?):
+  - "Find pairs/complements"
+  - "Check duplicates"
+  - "Count frequencies"
+  - "Track seen elements"
+  Time: O(1) operations
+  Space: O(n) storage
+
+Two Pointer Problems (Use When?):
+  - "Sorted array"
+  - "Palindrome/reverse"
+  - "Opposite ends"
+  - "Two targets"
+  Time: O(n) single pass
+  Space: O(1) only pointers
+
+Binary Search Problems (Use When?):
+  - "Sorted array required"
+  - "O(log n) required"
+  - "Search in rotated/modified"
+  - "Monotonic function"
+  Time: O(log n) very efficient
+  Space: O(1) or O(log n) if recursive
+
+Dynamic Programming (Use When?):
+  - "Optimal substructure"
+  - "Overlapping subproblems"
+  - "Maximize/minimize"
+  - "Count combinations"
+  Time: O(n) to O(n³) depending on states
+  Space: O(1) to O(n²) with optimization
+
+Heap Problems (Use When?):
+  - "K-way merge"
+  - "Top-K elements"
+  - "Priority processing"
+  - "Min/max elements"
+  Time: O(log n) per operation
+  Space: O(k) for k elements
+
+Backtracking + Memo (Use When?):
+  - "Find all solutions"
+  - "Combinations/permutations"
+  - "Dependent subproblems"
+  Time: O(n^n) to O(3^n) with pruning
+  Space: O(n²) for memoization
+
+─────────────────────────────────────────────────────────────────────────────
+OPTIMIZATION TECHNIQUES
+─────────────────────────────────────────────────────────────────────────────
+
+1. SPACE OPTIMIZATION (Rolling Array)
+   Before: O(n) space with DP array
+   After: O(1) space using two variables
+   Works when: Current state depends only on previous 1-2 states
+   Example: Climbing Stairs - store prev2, prev1 instead of array
+
+2. EARLY TERMINATION
+   Before: Process all elements
+   After: Stop when condition met
+   Example: 3Sum - break if current > 0 (no triplets can sum to 0)
+
+3. MEMOIZATION (Top-Down DP)
+   Before: Recompute same subproblems
+   After: Cache results, reuse
+   Example: Word Break II - avoid recomputing break("apple")
+
+4. PREPROCESSING (Sort, etc.)
+   Before: O(n) search each time
+   After: O(n log n) sort once, O(n²) two-pointer
+   Example: 3Sum - sort enables duplicate skipping and two-pointer
+
+5. OPTIMAL DATA STRUCTURE
+   Before: Brute force search O(n)
+   After: Hash set O(1)
+   Example: Two Sum - hashmap instead of nested loops
+
+─────────────────────────────────────────────────────────────────────────────
+WHEN TO APPLY WHICH PATTERN
+─────────────────────────────────────────────────────────────────────────────
+
+Problem asks for...        Best Pattern
+─────────────────────────  ──────────────────
+Two numbers/pairs          Hash Map or Two Pointer
+Duplicates/frequency       Hash Set/Map
+Palindrome/reverse         Two Pointer
+Sorted array search        Binary Search
+Maximum/minimum value      Kadane's or DP
+Find all combinations      Backtracking
+Merge multiple streams     Heap
+Optimal solution           Dynamic Programming
+Tree traversal             DFS/BFS
+Matrix path                Grid DP
+
+─────────────────────────────────────────────────────────────────────────────
+FINAL CHECKLIST FOR EACH SOLUTION
+─────────────────────────────────────────────────────────────────────────────
+
+Before submitting solution:
+☑ Time complexity explained and correct
+☑ Space complexity explained and correct
+☑ Handle edge cases:
+  - Empty input
+  - Single element
+  - All same elements
+  - Negative numbers
+  - Large values
+☑ Code is clean and readable
+☑ Variable names are meaningful
+☑ No off-by-one errors
+☑ No memory leaks (especially C++)
+☑ Used appropriate data structures
+☑ Recognized pattern correctly
+☑ Tested with provided examples
+
+─────────────────────────────────────────────────────────────────────────────
+
+Good luck! Remember: It's not about memorizing solutions,
+it's about recognizing patterns and adapting them.
+
+════════════════════════════════════════════════════════════════════════════
