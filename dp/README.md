@@ -9,8 +9,8 @@ Spot these triggers: “count number of ways,” “min/max value,” “partiti
 
 Pattern/Group 1: Fibonacci / Simple Recurrence
 
-1. [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/description/)
-2. [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/description/)
+1. [x] [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/description/)
+2. [x] [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/description/)
 3. [Dice Combinations](https://cses.fi/problemset/task/1633)
 4. [Range Sum Query - Immutable](https://leetcode.com/problems/range-sum-query-immutable/description/)
 
