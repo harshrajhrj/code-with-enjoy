@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Bipartite graph
 auto __fast_io_atexit = []()
 {
     ios::sync_with_stdio(false);
@@ -11,19 +12,23 @@ auto __fast_io_atexit = []()
     return 0;
 }();
 
-void dfs(int u, vector<vector<int>> &adjList, vector<int> &visited)
+bool dfs(int u, vector<int> &parent, vector<vector<int>> &adjList, vector<int> &visited)
 {
     visited[u] = 1;
+
     for (auto child : adjList[u])
     {
-        if (visited[child] == 0)
-            dfs(child, adjList, visited);
+        if (!visited[child])
+        {
+            parent[child] = u;
+        }
     }
 }
 
 int main()
 {
-    int m, n;
+    int n, m;
+
     cin >> n >> m;
 
     vector<vector<int>> adjList(n + 1);
@@ -31,28 +36,26 @@ int main()
     for (int i = 0; i < m; i++)
     {
         int node1, node2;
-
         cin >> node1 >> node2;
 
         adjList[node1].push_back(node2);
         adjList[node2].push_back(node1);
     }
 
+    vector<int> parent(n + 1, 0);
     vector<int> visited(n + 1, 0);
 
-    vector<int> ans;
+    bool flag = true;
+
     for (int i = 1; i < n + 1; i++)
     {
-        if (visited[i] == 0)
+        if (!visited[i])
         {
-            ans.push_back(i);
-            dfs(i, adjList, visited);
+            if (!dfs(i, parent, adjList, visited))
+            {
+                flag = false;
+                break;
+            }
         }
     }
-
-    cout << ans.size() - 1 << endl;
-    for (int i = 0; i < ans.size() - 1; i++)
-        cout << ans[i] << " " << ans[i + 1] << endl;
-
-    return 0;
 }
